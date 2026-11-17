@@ -1,0 +1,28 @@
+{
+  "hasMore": false,
+  "nextStartTime": "2026-11-16T07:00:00Z",
+  "nextEndTime": "2026-11-16T07:00:00Z",
+  "logs": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "message": "slow: GET /api/items took 2.4 s",
+      "timestamp": "2026-11-16T08:10:00Z",
+      "labels": [
+        {"name": "resource", "value": "srv-00000000000000000001"},
+        {"name": "instance", "value": "srv-00000000000000000001-bbbbb"},
+        {"name": "level", "value": "info"},
+        {"name": "type", "value": "app"}
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "message": "import: started nightly import",
+      "timestamp": "2026-11-16T08:09:30Z",
+      "labels": [
+        {"name": "resource", "value": "srv-00000000000000000001"},
+        {"name": "level", "value": "info"},
+        {"name": "type", "value": "app"}
+      ]
+    }
+  ]
+}

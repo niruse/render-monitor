@@ -1,0 +1,129 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Render",
+        "description": "Please enter a Render API key. An API key can be created on the API Keys page of the Render dashboard: {api_keys_url}\n\nRender API keys cannot be restricted to read-only access. This integration performs read operations (GET requests) only and never modifies anything on Render.",
+        "data": {
+          "api_key": "API key"
+        },
+        "data_description": {
+          "api_key": "The key is stored only in Home Assistant and is never written to the log."
+        }
+      },
+      "workspace": {
+        "title": "Select the workspace",
+        "data": {
+          "owner_id": "Workspace"
+        }
+      },
+      "services": {
+        "title": "Select the services",
+        "description": "Select the services in {workspace} to monitor. If all services remain selected, services added later will also be monitored.",
+        "data": {
+          "services": "Services"
+        }
+      },
+      "reauth_confirm": {
+        "title": "New Render API key",
+        "description": "Render rejected the saved API key for {workspace}. Please enter a new API key from {api_keys_url}",
+        "data": {
+          "api_key": "API key"
+        },
+        "data_description": {
+          "api_key": "The key is stored only in Home Assistant and is never written to the log."
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Render rejected this API key.",
+      "cannot_connect": "Unable to connect to Render. Please try again in a minute.",
+      "rate_limited": "Render is rate limiting this API key. Please wait a minute and try again.",
+      "no_services_selected": "Please select at least one service.",
+      "wrong_workspace": "This API key does not belong to the same workspace."
+    },
+    "abort": {
+      "already_configured": "This workspace is already configured.",
+      "no_workspaces": "This API key does not have access to any workspace.",
+      "reauth_successful": "The new API key has been saved.",
+      "invalid_auth": "Render rejected this API key.",
+      "cannot_connect": "Unable to connect to Render. Please try again in a minute.",
+      "rate_limited": "Render is rate limiting this API key. Please wait a minute and try again."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Render Monitor options",
+        "data": {
+          "services": "Services",
+          "scan_interval_minutes": "Refresh interval (minutes)",
+          "metrics_interval_minutes": "Metrics read interval (minutes)"
+        },
+        "data_description": {
+          "metrics_interval_minutes": "Metrics are retained between reads. Render permits 400 API requests per minute and 30 log requests per minute."
+        }
+      }
+    },
+    "error": {
+      "no_services_selected": "Please select at least one service."
+    },
+    "abort": {
+      "invalid_auth": "Render rejected this API key.",
+      "cannot_connect": "Unable to connect to Render. Please try again in a minute.",
+      "rate_limited": "Render is rate limiting this API key. Please wait a minute and try again."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "live": "Live",
+          "deploying": "Deploying",
+          "deploy_failed": "Deploy failed",
+          "suspended": "Suspended",
+          "not_deployed": "Not deployed"
+        }
+      },
+      "last_deploy": {
+        "name": "Last deploy"
+      },
+      "deploys_today": {
+        "name": "Deploys today"
+      },
+      "restarts_today": {
+        "name": "Restarts today"
+      },
+      "memory_peak": {
+        "name": "Memory peak (24 h)"
+      },
+      "cpu_avg": {
+        "name": "CPU average (24 h)"
+      },
+      "cpu_peak": {
+        "name": "CPU peak (24 h)"
+      },
+      "latency_p95": {
+        "name": "Response time p95"
+      },
+      "slow_requests": {
+        "name": "Slow requests"
+      },
+      "disk_used": {
+        "name": "Disk used"
+      },
+      "monthly_cost": {
+        "name": "Monthly cost"
+      },
+      "advice": {
+        "name": "Advice"
+      }
+    },
+    "binary_sensor": {
+      "needs_attention": {
+        "name": "Needs attention"
+      }
+    }
+  }
+}

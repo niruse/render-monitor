@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+.coverage
+htmlcov/
+# never commit real credentials or captured responses from a real account
+.env
+*.local.json
+recordings/

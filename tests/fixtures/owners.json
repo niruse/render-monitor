@@ -1,0 +1,12 @@
+[
+  {
+    "owner": {
+      "id": "tea-00000000000000000001",
+      "name": "Demo Workspace",
+      "email": "owner@example.com",
+      "type": "team",
+      "ipAllowList": []
+    },
+    "cursor": "Y3Vyc29yLW93bmVyLTE="
+  }
+]

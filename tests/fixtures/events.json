@@ -1,0 +1,22 @@
+[
+  {
+    "event": {
+      "id": "evt-0000000000000000000b",
+      "timestamp": "2026-11-16T06:12:00Z",
+      "serviceId": "srv-00000000000000000001",
+      "type": "server_failed",
+      "details": {"reason": {"oomKilled": {"memoryLimit": "2Gi"}}, "instanceID": "srv-00000000000000000001-aaaaa"}
+    },
+    "cursor": "Y3Vyc29yLWV2dC1i"
+  },
+  {
+    "event": {
+      "id": "evt-0000000000000000000a",
+      "timestamp": "2026-11-16T05:00:00Z",
+      "serviceId": "srv-00000000000000000001",
+      "type": "deploy_ended",
+      "details": {"deployId": "dep-00000000000000000002", "deployStatus": "succeeded"}
+    },
+    "cursor": "Y3Vyc29yLWV2dC1h"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "domain": "render_monitor",
+  "name": "Render Monitor",
+  "codeowners": ["@niruse"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http"],
+  "documentation": "https://github.com/niruse/render-monitor",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/niruse/render-monitor/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

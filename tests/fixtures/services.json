@@ -1,0 +1,93 @@
+[
+  {
+    "service": {
+      "id": "srv-00000000000000000001",
+      "name": "demo-api",
+      "ownerId": "tea-00000000000000000001",
+      "type": "web_service",
+      "createdAt": "2026-01-05T10:00:00.000000Z",
+      "updatedAt": "2026-11-15T08:30:00.000000Z",
+      "dashboardUrl": "https://dashboard.render.com/web/srv-00000000000000000001",
+      "suspended": "not_suspended",
+      "suspenders": [],
+      "autoDeploy": "yes",
+      "autoDeployTrigger": "commit",
+      "notifyOnFail": "default",
+      "slug": "demo-api",
+      "rootDir": "",
+      "branch": "main",
+      "repo": "https://github.com/example/demo-api",
+      "buildFilter": {"paths": [], "ignoredPaths": []},
+      "serviceDetails": {
+        "env": "python",
+        "runtime": "python",
+        "envSpecificDetails": {"buildCommand": "pip install -r requirements.txt", "startCommand": "gunicorn app:app"},
+        "plan": "standard",
+        "region": "frankfurt",
+        "numInstances": 1,
+        "buildPlan": "starter",
+        "healthCheckPath": "/health",
+        "openPorts": [{"port": 10000, "protocol": "TCP"}],
+        "url": "https://demo-api.example.com",
+        "disk": {"id": "dsk-00000000000000000001", "name": "data", "sizeGB": 10, "mountPath": "/var/data"},
+        "pullRequestPreviewsEnabled": "no",
+        "maxShutdownDelaySeconds": 30
+      }
+    },
+    "cursor": "Y3Vyc29yLXNydi0x"
+  },
+  {
+    "service": {
+      "id": "srv-00000000000000000002",
+      "name": "demo-site",
+      "ownerId": "tea-00000000000000000001",
+      "type": "static_site",
+      "createdAt": "2026-02-01T09:00:00.000000Z",
+      "updatedAt": "2026-11-14T12:00:00.000000Z",
+      "dashboardUrl": "https://dashboard.render.com/static/srv-00000000000000000002",
+      "suspended": "not_suspended",
+      "suspenders": [],
+      "autoDeploy": "yes",
+      "notifyOnFail": "default",
+      "slug": "demo-site",
+      "rootDir": "",
+      "branch": "main",
+      "repo": "https://github.com/example/demo-site",
+      "serviceDetails": {
+        "buildCommand": "npm run build",
+        "publishPath": "dist",
+        "url": "https://demo-site.example.com",
+        "buildPlan": "starter",
+        "pullRequestPreviewsEnabled": "no"
+      }
+    },
+    "cursor": "Y3Vyc29yLXNydi0y"
+  },
+  {
+    "service": {
+      "id": "srv-00000000000000000003",
+      "name": "demo-worker",
+      "ownerId": "tea-00000000000000000001",
+      "type": "background_worker",
+      "createdAt": "2026-03-10T07:00:00.000000Z",
+      "updatedAt": "2026-10-01T07:00:00.000000Z",
+      "dashboardUrl": "https://dashboard.render.com/worker/srv-00000000000000000003",
+      "suspended": "suspended",
+      "suspenders": ["user"],
+      "autoDeploy": "no",
+      "notifyOnFail": "default",
+      "slug": "demo-worker",
+      "rootDir": "",
+      "serviceDetails": {
+        "env": "docker",
+        "runtime": "docker",
+        "envSpecificDetails": {"dockerCommand": "", "dockerContext": ".", "dockerfilePath": "./Dockerfile"},
+        "plan": "starter",
+        "region": "oregon",
+        "numInstances": 1,
+        "buildPlan": "starter"
+      }
+    },
+    "cursor": "Y3Vyc29yLXNydi0z"
+  }
+]

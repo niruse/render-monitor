@@ -1,0 +1,41 @@
+[
+  {
+    "deploy": {
+      "id": "dep-00000000000000000003",
+      "commit": {"id": "0000000000000000000000000000000000000003", "message": "Speed up the import job", "createdAt": "2026-11-16T09:58:00Z"},
+      "status": "build_failed",
+      "trigger": "new_commit",
+      "startedAt": "2026-11-16T10:00:05Z",
+      "finishedAt": "2026-11-16T10:03:40Z",
+      "createdAt": "2026-11-16T10:00:00Z",
+      "updatedAt": "2026-11-16T10:03:40Z"
+    },
+    "cursor": "Y3Vyc29yLWRlcC0z"
+  },
+  {
+    "deploy": {
+      "id": "dep-00000000000000000002",
+      "commit": {"id": "0000000000000000000000000000000000000002", "message": "Fix the health check", "createdAt": "2026-11-16T07:59:00Z"},
+      "status": "live",
+      "trigger": "new_commit",
+      "startedAt": "2026-11-16T08:00:05Z",
+      "finishedAt": "2026-11-16T08:04:10Z",
+      "createdAt": "2026-11-16T08:00:00Z",
+      "updatedAt": "2026-11-16T08:04:10Z"
+    },
+    "cursor": "Y3Vyc29yLWRlcC0y"
+  },
+  {
+    "deploy": {
+      "id": "dep-00000000000000000001",
+      "commit": {"id": "0000000000000000000000000000000000000001", "message": "Initial release", "createdAt": "2026-11-15T17:59:00Z"},
+      "status": "deactivated",
+      "trigger": "manual",
+      "startedAt": "2026-11-15T18:00:05Z",
+      "finishedAt": "2026-11-15T18:04:00Z",
+      "createdAt": "2026-11-15T18:00:00Z",
+      "updatedAt": "2026-11-16T08:04:10Z"
+    },
+    "cursor": "Y3Vyc29yLWRlcC0x"
+  }
+]

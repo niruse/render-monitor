@@ -1,0 +1,1552 @@
+{
+ "states": {
+  "binary_sensor.demo_api_needs_attention": {
+   "entity_id": "binary_sensor.demo_api_needs_attention",
+   "state": "on",
+   "attributes": {
+    "codes": [
+     "memory",
+     "deploy_failed"
+    ],
+    "device_class": "problem",
+    "friendly_name": "demo-api Needs attention"
+   }
+  },
+  "binary_sensor.demo_shop_needs_attention": {
+   "entity_id": "binary_sensor.demo_shop_needs_attention",
+   "state": "on",
+   "attributes": {
+    "codes": [
+     "memory",
+     "many_deploys",
+     "latency_spike",
+     "slow_spike"
+    ],
+    "device_class": "problem",
+    "friendly_name": "demo-shop Needs attention"
+   }
+  },
+  "binary_sensor.demo_site_needs_attention": {
+   "entity_id": "binary_sensor.demo_site_needs_attention",
+   "state": "off",
+   "attributes": {
+    "codes": [],
+    "device_class": "problem",
+    "friendly_name": "demo-site Needs attention"
+   }
+  },
+  "binary_sensor.demo_worker_needs_attention": {
+   "entity_id": "binary_sensor.demo_worker_needs_attention",
+   "state": "off",
+   "attributes": {
+    "codes": [],
+    "device_class": "problem",
+    "friendly_name": "demo-worker Needs attention"
+   }
+  },
+  "sensor.demo_api_advice": {
+   "entity_id": "sensor.demo_api_advice",
+   "state": "2",
+   "attributes": {
+    "top_severity": "critical",
+    "advice": [
+     {
+      "severity": "critical",
+      "code": "memory",
+      "text_key": "memory_oom",
+      "values": {
+       "plan": "standard",
+       "peak_pct": null,
+       "peak_mb": null,
+       "limit_mb": null,
+       "oom_count": 1,
+       "prices_date": "2026-11-16",
+       "pricing_url": "https://render.com/pricing",
+       "at": "2026-11-16T06:12:00Z",
+       "time": "06:12",
+       "next_plan": "pro",
+       "next_label": "Pro",
+       "next_memory_gb": 4.0,
+       "next_price": 85.0,
+       "price_delta": 60.0,
+       "cause": "unknown"
+      }
+     },
+     {
+      "severity": "warning",
+      "code": "deploy_failed",
+      "text_key": "deploy_failed",
+      "values": {
+       "status": "build_failed",
+       "commit": "0000000",
+       "message": "Speed up the import job",
+       "reason": "build_failed",
+       "exit_code": null,
+       "at": "2026-11-16T10:00:00Z",
+       "time": "10:00",
+       "failed_count": 1
+      }
+     }
+    ],
+    "texts": [
+     "The service ran out of memory 1 time(s), most recently at 06:12, and was restarted by Render. It is recommended to move to Pro (4 GB at $85 per month, an additional $60 per month) or to reduce the peak memory usage. Prices are as of 2026-11-16; please verify them at https://render.com/pricing.",
+     "The latest deploy failed (build_failed) at 10:00. Commit: 0000000 \"Speed up the import job\". Reason: the build failed."
+    ],
+    "friendly_name": "demo-api Advice"
+   }
+  },
+  "sensor.demo_api_cpu_average_24_h": {
+   "entity_id": "sensor.demo_api_cpu_average_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "series": [],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-api CPU average (24 h)"
+   }
+  },
+  "sensor.demo_api_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_api_cpu_peak_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-api CPU peak (24 h)"
+   }
+  },
+  "sensor.demo_api_deploys_today": {
+   "entity_id": "sensor.demo_api_deploys_today",
+   "state": "2",
+   "attributes": {
+    "state_class": "total_increasing",
+    "failed_today": 1,
+    "friendly_name": "demo-api Deploys today"
+   }
+  },
+  "sensor.demo_api_disk_used": {
+   "entity_id": "sensor.demo_api_disk_used",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "used_gb": null,
+    "size_gb": 10.0,
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-api Disk used"
+   }
+  },
+  "sensor.demo_api_last_deploy": {
+   "entity_id": "sensor.demo_api_last_deploy",
+   "state": "2026-11-16T10:03:40+00:00",
+   "attributes": {
+    "status": "build_failed",
+    "trigger": "new_commit",
+    "commit": "0000000",
+    "message": "Speed up the import job",
+    "created_at": "2026-11-16T10:00:00Z",
+    "finished_at": "2026-11-16T10:03:40Z",
+    "duration_s": 220,
+    "reason": "build_failed",
+    "device_class": "timestamp",
+    "friendly_name": "demo-api Last deploy"
+   }
+  },
+  "sensor.demo_api_memory_peak_24_h": {
+   "entity_id": "sensor.demo_api_memory_peak_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "peak_mb": null,
+    "limit_mb": null,
+    "peak_at": null,
+    "series": [],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-api Memory peak (24 h)"
+   }
+  },
+  "sensor.demo_api_monthly_cost": {
+   "entity_id": "sensor.demo_api_monthly_cost",
+   "state": "27.5",
+   "attributes": {
+    "plan": "standard",
+    "instances": 1,
+    "disk_gb": 10.0,
+    "prices_date": "2026-11-16",
+    "pricing_url": "https://render.com/pricing",
+    "unit_of_measurement": "USD",
+    "device_class": "monetary",
+    "friendly_name": "demo-api Monthly cost"
+   }
+  },
+  "sensor.demo_api_response_time_p95": {
+   "entity_id": "sensor.demo_api_response_time_p95",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "peak_ms": null,
+    "peak_at": null,
+    "median_ms": null,
+    "unit_of_measurement": "ms",
+    "device_class": "duration",
+    "friendly_name": "demo-api Response time p95"
+   }
+  },
+  "sensor.demo_api_restarts_today": {
+   "entity_id": "sensor.demo_api_restarts_today",
+   "state": "2",
+   "attributes": {
+    "state_class": "total_increasing",
+    "deploys": 1,
+    "crashes": 1,
+    "restarts": 0,
+    "instances_seen": 1,
+    "friendly_name": "demo-api Restarts today"
+   }
+  },
+  "sensor.demo_api_slow_requests": {
+   "entity_id": "sensor.demo_api_slow_requests",
+   "state": "0",
+   "attributes": {
+    "state_class": "measurement",
+    "total_24h": 0,
+    "truncated": false,
+    "complete_from": null,
+    "per_hour": [
+     [
+      "2026-11-15T21:00:00Z",
+      0
+     ],
+     [
+      "2026-11-15T22:00:00Z",
+      0
+     ],
+     [
+      "2026-11-15T23:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T00:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T01:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T02:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T03:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T04:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T05:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T06:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T07:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T08:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T09:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T10:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T11:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T12:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T13:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T14:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T15:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T16:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T17:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T18:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T19:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T20:00:00Z",
+      0
+     ]
+    ],
+    "unit_of_measurement": "requests/h",
+    "friendly_name": "demo-api Slow requests"
+   }
+  },
+  "sensor.demo_api_status": {
+   "entity_id": "sensor.demo_api_status",
+   "state": "deploy_failed",
+   "attributes": {
+    "options": [
+     "live",
+     "deploying",
+     "deploy_failed",
+     "suspended",
+     "not_deployed"
+    ],
+    "service_type": "web_service",
+    "plan": "standard",
+    "region": "frankfurt",
+    "instances": 1,
+    "suspenders": [],
+    "errors": null,
+    "device_class": "enum",
+    "friendly_name": "demo-api Status"
+   }
+  },
+  "sensor.demo_shop_advice": {
+   "entity_id": "sensor.demo_shop_advice",
+   "state": "5",
+   "attributes": {
+    "top_severity": "warning",
+    "advice": [
+     {
+      "severity": "warning",
+      "code": "memory",
+      "text_key": "memory_high_import",
+      "values": {
+       "plan": "starter",
+       "peak_pct": 86,
+       "peak_mb": 440,
+       "limit_mb": 512,
+       "oom_count": 0,
+       "prices_date": "2026-11-16",
+       "pricing_url": "https://render.com/pricing",
+       "at": "2026-11-16T03:20:00Z",
+       "time": "03:20",
+       "next_plan": "standard",
+       "next_label": "Standard",
+       "next_memory_gb": 2.0,
+       "next_price": 25.0,
+       "price_delta": 18.0,
+       "cause": "import"
+      }
+     },
+     {
+      "severity": "warning",
+      "code": "many_deploys",
+      "text_key": "many_deploys_disk",
+      "values": {
+       "count": 15,
+       "disk_gb": 1.0,
+       "deploy_min": 71
+      }
+     },
+     {
+      "severity": "warning",
+      "code": "latency_spike",
+      "text_key": "latency_spike_import",
+      "values": {
+       "p95_ms": 2400,
+       "median_ms": 120,
+       "spikes": 1,
+       "cause": "import",
+       "at": "2026-11-16T03:15:00Z",
+       "time": "03:15"
+      }
+     },
+     {
+      "severity": "warning",
+      "code": "slow_spike",
+      "text_key": "slow_spike_import",
+      "values": {
+       "count": 12,
+       "hours": 1,
+       "cause": "import",
+       "at": "2026-11-16T03:00:00Z",
+       "time": "03:00"
+      }
+     },
+     {
+      "severity": "info",
+      "code": "deploy_failed",
+      "text_key": "deploy_failed_recovered",
+      "values": {
+       "status": "update_failed",
+       "commit": "0000000",
+       "message": "Read the import in batches",
+       "reason": "no_port",
+       "exit_code": null,
+       "at": "2026-11-16T09:40:00Z",
+       "time": "09:40",
+       "failed_count": 1
+      }
+     }
+    ],
+    "texts": [
+     "Memory usage reached 86% of the 512 MB limit at 03:20, while an import was running. It is recommended to import the data in smaller batches or to move to Standard (2 GB at $25 per month, an additional $18 per month). Prices are as of 2026-11-16; please verify them at https://render.com/pricing.",
+     "15 deploys today restarted this service. Because the service has a 1 GB disk, zero-downtime deploys are not available, and every deploy that passes the build stage stops the service until the new instance is running. These deploys took approximately 71 minutes in total, including the build. It is recommended to combine commits into fewer deploys, or to configure build filters so that changes to documentation and tests do not trigger a deploy.",
+     "Response times were elevated: the p95 response time reached 2400 ms at 03:15 (typically 120 ms) while an import was running. It is recommended to run imports during a quiet period or in smaller batches.",
+     "12 slow requests were logged in the hour beginning at 03:00, while an import was running. Number of such hours today: 1.",
+     "A deploy failed today at 09:40 (1 failed in total). Commit: 0000000 \"Read the import in batches\". Reason: the service never opened its port. A later deploy is now live."
+    ],
+    "friendly_name": "demo-shop Advice"
+   }
+  },
+  "sensor.demo_shop_cpu_average_24_h": {
+   "entity_id": "sensor.demo_shop_cpu_average_24_h",
+   "state": "12.5",
+   "attributes": {
+    "state_class": "measurement",
+    "series": [
+     [
+      "2026-11-15T20:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T20:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T21:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T21:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T22:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T22:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T23:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-15T23:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T00:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T00:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T01:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T01:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T02:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T02:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T03:00:00Z",
+      90.0
+     ],
+     [
+      "2026-11-16T03:30:00Z",
+      90.0
+     ],
+     [
+      "2026-11-16T04:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T04:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T05:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T05:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T06:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T06:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T07:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T07:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T08:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T08:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T09:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T09:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T10:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T10:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T11:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T11:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T12:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T12:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T13:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T13:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T14:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T14:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T15:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T15:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T16:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T16:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T17:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T17:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T18:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T18:30:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T19:00:00Z",
+      10.0
+     ],
+     [
+      "2026-11-16T19:30:00Z",
+      10.0
+     ]
+    ],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-shop CPU average (24 h)"
+   }
+  },
+  "sensor.demo_shop_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_shop_cpu_peak_24_h",
+   "state": "90.0",
+   "attributes": {
+    "state_class": "measurement",
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-shop CPU peak (24 h)"
+   }
+  },
+  "sensor.demo_shop_deploys_today": {
+   "entity_id": "sensor.demo_shop_deploys_today",
+   "state": "15",
+   "attributes": {
+    "state_class": "total_increasing",
+    "failed_today": 1,
+    "friendly_name": "demo-shop Deploys today"
+   }
+  },
+  "sensor.demo_shop_disk_used": {
+   "entity_id": "sensor.demo_shop_disk_used",
+   "state": "30.0",
+   "attributes": {
+    "state_class": "measurement",
+    "used_gb": 0.3,
+    "size_gb": 1.0,
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-shop Disk used"
+   }
+  },
+  "sensor.demo_shop_last_deploy": {
+   "entity_id": "sensor.demo_shop_last_deploy",
+   "state": "2026-11-16T18:54:00+00:00",
+   "attributes": {
+    "status": "live",
+    "trigger": "new_commit",
+    "commit": "0000000",
+    "message": "Small change 1",
+    "created_at": "2026-11-16T18:50:00Z",
+    "finished_at": "2026-11-16T18:54:00Z",
+    "duration_s": 240,
+    "reason": null,
+    "device_class": "timestamp",
+    "friendly_name": "demo-shop Last deploy"
+   }
+  },
+  "sensor.demo_shop_memory_peak_24_h": {
+   "entity_id": "sensor.demo_shop_memory_peak_24_h",
+   "state": "85.9",
+   "attributes": {
+    "state_class": "measurement",
+    "peak_mb": 440,
+    "limit_mb": 512,
+    "peak_at": "2026-11-16T03:20:00Z",
+    "series": [
+     [
+      "2026-11-15T20:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T20:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T21:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T21:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T22:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T22:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T23:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-15T23:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T00:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T00:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T01:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T01:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T02:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T02:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T03:00:00Z",
+      85.9
+     ],
+     [
+      "2026-11-16T03:30:00Z",
+      60.5
+     ],
+     [
+      "2026-11-16T04:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T04:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T05:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T05:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T06:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T06:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T07:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T07:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T08:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T08:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T09:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T09:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T10:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T10:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T11:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T11:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T12:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T12:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T13:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T13:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T14:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T14:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T15:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T15:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T16:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T16:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T17:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T17:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T18:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T18:30:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T19:00:00Z",
+      35.2
+     ],
+     [
+      "2026-11-16T19:30:00Z",
+      35.2
+     ]
+    ],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-shop Memory peak (24 h)"
+   }
+  },
+  "sensor.demo_shop_monthly_cost": {
+   "entity_id": "sensor.demo_shop_monthly_cost",
+   "state": "7.25",
+   "attributes": {
+    "plan": "starter",
+    "instances": 1,
+    "disk_gb": 1.0,
+    "prices_date": "2026-11-16",
+    "pricing_url": "https://render.com/pricing",
+    "unit_of_measurement": "USD",
+    "device_class": "monetary",
+    "friendly_name": "demo-shop Monthly cost"
+   }
+  },
+  "sensor.demo_shop_response_time_p95": {
+   "entity_id": "sensor.demo_shop_response_time_p95",
+   "state": "120.0",
+   "attributes": {
+    "state_class": "measurement",
+    "peak_ms": 2400.0,
+    "peak_at": "2026-11-16T03:15:00Z",
+    "median_ms": 120.0,
+    "unit_of_measurement": "ms",
+    "device_class": "duration",
+    "friendly_name": "demo-shop Response time p95"
+   }
+  },
+  "sensor.demo_shop_restarts_today": {
+   "entity_id": "sensor.demo_shop_restarts_today",
+   "state": "14",
+   "attributes": {
+    "state_class": "total_increasing",
+    "deploys": 14,
+    "crashes": 0,
+    "restarts": 0,
+    "instances_seen": 1,
+    "friendly_name": "demo-shop Restarts today"
+   }
+  },
+  "sensor.demo_shop_slow_requests": {
+   "entity_id": "sensor.demo_shop_slow_requests",
+   "state": "0",
+   "attributes": {
+    "state_class": "measurement",
+    "total_24h": 13,
+    "truncated": false,
+    "complete_from": null,
+    "per_hour": [
+     [
+      "2026-11-15T21:00:00Z",
+      0
+     ],
+     [
+      "2026-11-15T22:00:00Z",
+      0
+     ],
+     [
+      "2026-11-15T23:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T00:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T01:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T02:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T03:00:00Z",
+      12
+     ],
+     [
+      "2026-11-16T04:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T05:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T06:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T07:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T08:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T09:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T10:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T11:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T12:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T13:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T14:00:00Z",
+      1
+     ],
+     [
+      "2026-11-16T15:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T16:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T17:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T18:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T19:00:00Z",
+      0
+     ],
+     [
+      "2026-11-16T20:00:00Z",
+      0
+     ]
+    ],
+    "unit_of_measurement": "requests/h",
+    "friendly_name": "demo-shop Slow requests"
+   }
+  },
+  "sensor.demo_shop_status": {
+   "entity_id": "sensor.demo_shop_status",
+   "state": "live",
+   "attributes": {
+    "options": [
+     "live",
+     "deploying",
+     "deploy_failed",
+     "suspended",
+     "not_deployed"
+    ],
+    "service_type": "web_service",
+    "plan": "starter",
+    "region": "frankfurt",
+    "instances": 1,
+    "suspenders": [],
+    "errors": null,
+    "device_class": "enum",
+    "friendly_name": "demo-shop Status"
+   }
+  },
+  "sensor.demo_site_advice": {
+   "entity_id": "sensor.demo_site_advice",
+   "state": "0",
+   "attributes": {
+    "top_severity": null,
+    "advice": [],
+    "texts": [],
+    "friendly_name": "demo-site Advice"
+   }
+  },
+  "sensor.demo_site_deploys_today": {
+   "entity_id": "sensor.demo_site_deploys_today",
+   "state": "0",
+   "attributes": {
+    "state_class": "total_increasing",
+    "failed_today": 0,
+    "friendly_name": "demo-site Deploys today"
+   }
+  },
+  "sensor.demo_site_last_deploy": {
+   "entity_id": "sensor.demo_site_last_deploy",
+   "state": "unknown",
+   "attributes": {
+    "status": null,
+    "trigger": null,
+    "commit": null,
+    "message": null,
+    "created_at": null,
+    "finished_at": null,
+    "duration_s": null,
+    "reason": null,
+    "device_class": "timestamp",
+    "friendly_name": "demo-site Last deploy"
+   }
+  },
+  "sensor.demo_site_monthly_cost": {
+   "entity_id": "sensor.demo_site_monthly_cost",
+   "state": "0.0",
+   "attributes": {
+    "plan": null,
+    "instances": 1,
+    "disk_gb": 0.0,
+    "prices_date": "2026-11-16",
+    "pricing_url": "https://render.com/pricing",
+    "unit_of_measurement": "USD",
+    "device_class": "monetary",
+    "friendly_name": "demo-site Monthly cost"
+   }
+  },
+  "sensor.demo_site_status": {
+   "entity_id": "sensor.demo_site_status",
+   "state": "not_deployed",
+   "attributes": {
+    "options": [
+     "live",
+     "deploying",
+     "deploy_failed",
+     "suspended",
+     "not_deployed"
+    ],
+    "service_type": "static_site",
+    "plan": null,
+    "region": null,
+    "instances": 1,
+    "suspenders": [],
+    "errors": null,
+    "device_class": "enum",
+    "friendly_name": "demo-site Status"
+   }
+  },
+  "sensor.demo_worker_advice": {
+   "entity_id": "sensor.demo_worker_advice",
+   "state": "1",
+   "attributes": {
+    "top_severity": "info",
+    "advice": [
+     {
+      "severity": "info",
+      "code": "suspended",
+      "text_key": "suspended",
+      "values": {
+       "by": "user",
+       "monthly_cost": 0.0,
+       "running_cost": 7.0,
+       "prices_date": "2026-11-16",
+       "pricing_url": "https://render.com/pricing"
+      }
+     }
+    ],
+    "texts": [
+     "The service is suspended (by user), so its instances are not billed ($7 per month when running). If the service is no longer needed, it is recommended to delete it. Prices are as of 2026-11-16; please verify them at https://render.com/pricing."
+    ],
+    "friendly_name": "demo-worker Advice"
+   }
+  },
+  "sensor.demo_worker_cpu_average_24_h": {
+   "entity_id": "sensor.demo_worker_cpu_average_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "series": [],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-worker CPU average (24 h)"
+   }
+  },
+  "sensor.demo_worker_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_worker_cpu_peak_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-worker CPU peak (24 h)"
+   }
+  },
+  "sensor.demo_worker_deploys_today": {
+   "entity_id": "sensor.demo_worker_deploys_today",
+   "state": "0",
+   "attributes": {
+    "state_class": "total_increasing",
+    "failed_today": 0,
+    "friendly_name": "demo-worker Deploys today"
+   }
+  },
+  "sensor.demo_worker_last_deploy": {
+   "entity_id": "sensor.demo_worker_last_deploy",
+   "state": "unknown",
+   "attributes": {
+    "status": null,
+    "trigger": null,
+    "commit": null,
+    "message": null,
+    "created_at": null,
+    "finished_at": null,
+    "duration_s": null,
+    "reason": null,
+    "device_class": "timestamp",
+    "friendly_name": "demo-worker Last deploy"
+   }
+  },
+  "sensor.demo_worker_memory_peak_24_h": {
+   "entity_id": "sensor.demo_worker_memory_peak_24_h",
+   "state": "unknown",
+   "attributes": {
+    "state_class": "measurement",
+    "peak_mb": null,
+    "limit_mb": null,
+    "peak_at": null,
+    "series": [],
+    "unit_of_measurement": "%",
+    "friendly_name": "demo-worker Memory peak (24 h)"
+   }
+  },
+  "sensor.demo_worker_monthly_cost": {
+   "entity_id": "sensor.demo_worker_monthly_cost",
+   "state": "0.0",
+   "attributes": {
+    "plan": "starter",
+    "instances": 1,
+    "disk_gb": 0.0,
+    "prices_date": "2026-11-16",
+    "pricing_url": "https://render.com/pricing",
+    "unit_of_measurement": "USD",
+    "device_class": "monetary",
+    "friendly_name": "demo-worker Monthly cost"
+   }
+  },
+  "sensor.demo_worker_restarts_today": {
+   "entity_id": "sensor.demo_worker_restarts_today",
+   "state": "1",
+   "attributes": {
+    "state_class": "total_increasing",
+    "deploys": 0,
+    "crashes": 0,
+    "restarts": 0,
+    "instances_seen": 1,
+    "friendly_name": "demo-worker Restarts today"
+   }
+  },
+  "sensor.demo_worker_status": {
+   "entity_id": "sensor.demo_worker_status",
+   "state": "suspended",
+   "attributes": {
+    "options": [
+     "live",
+     "deploying",
+     "deploy_failed",
+     "suspended",
+     "not_deployed"
+    ],
+    "service_type": "background_worker",
+    "plan": "starter",
+    "region": "oregon",
+    "instances": 1,
+    "suspenders": [
+     "user"
+    ],
+    "errors": null,
+    "device_class": "enum",
+    "friendly_name": "demo-worker Status"
+   }
+  }
+ },
+ "entities": {
+  "binary_sensor.demo_api_needs_attention": {
+   "entity_id": "binary_sensor.demo_api_needs_attention",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "needs_attention"
+  },
+  "binary_sensor.demo_shop_needs_attention": {
+   "entity_id": "binary_sensor.demo_shop_needs_attention",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "needs_attention"
+  },
+  "binary_sensor.demo_site_needs_attention": {
+   "entity_id": "binary_sensor.demo_site_needs_attention",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "needs_attention"
+  },
+  "binary_sensor.demo_worker_needs_attention": {
+   "entity_id": "binary_sensor.demo_worker_needs_attention",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "needs_attention"
+  },
+  "sensor.demo_api_advice": {
+   "entity_id": "sensor.demo_api_advice",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "advice"
+  },
+  "sensor.demo_api_cpu_average_24_h": {
+   "entity_id": "sensor.demo_api_cpu_average_24_h",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "cpu_avg"
+  },
+  "sensor.demo_api_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_api_cpu_peak_24_h",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "cpu_peak"
+  },
+  "sensor.demo_api_deploys_today": {
+   "entity_id": "sensor.demo_api_deploys_today",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "deploys_today"
+  },
+  "sensor.demo_api_disk_used": {
+   "entity_id": "sensor.demo_api_disk_used",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "disk_used"
+  },
+  "sensor.demo_api_last_deploy": {
+   "entity_id": "sensor.demo_api_last_deploy",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "last_deploy"
+  },
+  "sensor.demo_api_memory_peak_24_h": {
+   "entity_id": "sensor.demo_api_memory_peak_24_h",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "memory_peak"
+  },
+  "sensor.demo_api_monthly_cost": {
+   "entity_id": "sensor.demo_api_monthly_cost",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "monthly_cost"
+  },
+  "sensor.demo_api_response_time_p95": {
+   "entity_id": "sensor.demo_api_response_time_p95",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "latency_p95"
+  },
+  "sensor.demo_api_restarts_today": {
+   "entity_id": "sensor.demo_api_restarts_today",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "restarts_today"
+  },
+  "sensor.demo_api_slow_requests": {
+   "entity_id": "sensor.demo_api_slow_requests",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "slow_requests"
+  },
+  "sensor.demo_api_status": {
+   "entity_id": "sensor.demo_api_status",
+   "device_id": "device_1",
+   "platform": "render_monitor",
+   "translation_key": "status"
+  },
+  "sensor.demo_shop_advice": {
+   "entity_id": "sensor.demo_shop_advice",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "advice"
+  },
+  "sensor.demo_shop_cpu_average_24_h": {
+   "entity_id": "sensor.demo_shop_cpu_average_24_h",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "cpu_avg"
+  },
+  "sensor.demo_shop_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_shop_cpu_peak_24_h",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "cpu_peak"
+  },
+  "sensor.demo_shop_deploys_today": {
+   "entity_id": "sensor.demo_shop_deploys_today",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "deploys_today"
+  },
+  "sensor.demo_shop_disk_used": {
+   "entity_id": "sensor.demo_shop_disk_used",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "disk_used"
+  },
+  "sensor.demo_shop_last_deploy": {
+   "entity_id": "sensor.demo_shop_last_deploy",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "last_deploy"
+  },
+  "sensor.demo_shop_memory_peak_24_h": {
+   "entity_id": "sensor.demo_shop_memory_peak_24_h",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "memory_peak"
+  },
+  "sensor.demo_shop_monthly_cost": {
+   "entity_id": "sensor.demo_shop_monthly_cost",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "monthly_cost"
+  },
+  "sensor.demo_shop_response_time_p95": {
+   "entity_id": "sensor.demo_shop_response_time_p95",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "latency_p95"
+  },
+  "sensor.demo_shop_restarts_today": {
+   "entity_id": "sensor.demo_shop_restarts_today",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "restarts_today"
+  },
+  "sensor.demo_shop_slow_requests": {
+   "entity_id": "sensor.demo_shop_slow_requests",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "slow_requests"
+  },
+  "sensor.demo_shop_status": {
+   "entity_id": "sensor.demo_shop_status",
+   "device_id": "device_4",
+   "platform": "render_monitor",
+   "translation_key": "status"
+  },
+  "sensor.demo_site_advice": {
+   "entity_id": "sensor.demo_site_advice",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "advice"
+  },
+  "sensor.demo_site_deploys_today": {
+   "entity_id": "sensor.demo_site_deploys_today",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "deploys_today"
+  },
+  "sensor.demo_site_last_deploy": {
+   "entity_id": "sensor.demo_site_last_deploy",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "last_deploy"
+  },
+  "sensor.demo_site_monthly_cost": {
+   "entity_id": "sensor.demo_site_monthly_cost",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "monthly_cost"
+  },
+  "sensor.demo_site_status": {
+   "entity_id": "sensor.demo_site_status",
+   "device_id": "device_2",
+   "platform": "render_monitor",
+   "translation_key": "status"
+  },
+  "sensor.demo_worker_advice": {
+   "entity_id": "sensor.demo_worker_advice",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "advice"
+  },
+  "sensor.demo_worker_cpu_average_24_h": {
+   "entity_id": "sensor.demo_worker_cpu_average_24_h",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "cpu_avg"
+  },
+  "sensor.demo_worker_cpu_peak_24_h": {
+   "entity_id": "sensor.demo_worker_cpu_peak_24_h",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "cpu_peak"
+  },
+  "sensor.demo_worker_deploys_today": {
+   "entity_id": "sensor.demo_worker_deploys_today",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "deploys_today"
+  },
+  "sensor.demo_worker_last_deploy": {
+   "entity_id": "sensor.demo_worker_last_deploy",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "last_deploy"
+  },
+  "sensor.demo_worker_memory_peak_24_h": {
+   "entity_id": "sensor.demo_worker_memory_peak_24_h",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "memory_peak"
+  },
+  "sensor.demo_worker_monthly_cost": {
+   "entity_id": "sensor.demo_worker_monthly_cost",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "monthly_cost"
+  },
+  "sensor.demo_worker_restarts_today": {
+   "entity_id": "sensor.demo_worker_restarts_today",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "restarts_today"
+  },
+  "sensor.demo_worker_status": {
+   "entity_id": "sensor.demo_worker_status",
+   "device_id": "device_3",
+   "platform": "render_monitor",
+   "translation_key": "status"
+  }
+ },
+ "devices": {
+  "device_1": {
+   "id": "device_1",
+   "name": "demo-api",
+   "model": "web_service",
+   "manufacturer": "Render",
+   "configuration_url": "https://dashboard.render.com/web/srv-00000000000000000001"
+  },
+  "device_2": {
+   "id": "device_2",
+   "name": "demo-site",
+   "model": "static_site",
+   "manufacturer": "Render",
+   "configuration_url": "https://dashboard.render.com/static/srv-00000000000000000002"
+  },
+  "device_3": {
+   "id": "device_3",
+   "name": "demo-worker",
+   "model": "background_worker",
+   "manufacturer": "Render",
+   "configuration_url": "https://dashboard.render.com/worker/srv-00000000000000000003"
+  },
+  "device_4": {
+   "id": "device_4",
+   "name": "demo-shop",
+   "model": "web_service",
+   "manufacturer": "Render",
+   "configuration_url": "https://dashboard.render.com/web/srv-00000000000000000004"
+  }
+ },
+ "expected_texts": {
+  "sensor.demo_api_advice": [
+   "The service ran out of memory 1 time(s), most recently at 06:12, and was restarted by Render. It is recommended to move to Pro (4 GB at $85 per month, an additional $60 per month) or to reduce the peak memory usage. Prices are as of 2026-11-16; please verify them at https://render.com/pricing.",
+   "The latest deploy failed (build_failed) at 10:00. Commit: 0000000 \"Speed up the import job\". Reason: the build failed."
+  ],
+  "sensor.demo_shop_advice": [
+   "Memory usage reached 86% of the 512 MB limit at 03:20, while an import was running. It is recommended to import the data in smaller batches or to move to Standard (2 GB at $25 per month, an additional $18 per month). Prices are as of 2026-11-16; please verify them at https://render.com/pricing.",
+   "15 deploys today restarted this service. Because the service has a 1 GB disk, zero-downtime deploys are not available, and every deploy that passes the build stage stops the service until the new instance is running. These deploys took approximately 71 minutes in total, including the build. It is recommended to combine commits into fewer deploys, or to configure build filters so that changes to documentation and tests do not trigger a deploy.",
+   "Response times were elevated: the p95 response time reached 2400 ms at 03:15 (typically 120 ms) while an import was running. It is recommended to run imports during a quiet period or in smaller batches.",
+   "12 slow requests were logged in the hour beginning at 03:00, while an import was running. Number of such hours today: 1.",
+   "A deploy failed today at 09:40 (1 failed in total). Commit: 0000000 \"Read the import in batches\". Reason: the service never opened its port. A later deploy is now live."
+  ],
+  "sensor.demo_site_advice": [],
+  "sensor.demo_worker_advice": [
+   "The service is suspended (by user), so its instances are not billed ($7 per month when running). If the service is no longer needed, it is recommended to delete it. Prices are as of 2026-11-16; please verify them at https://render.com/pricing."
+  ]
+ }
+}
