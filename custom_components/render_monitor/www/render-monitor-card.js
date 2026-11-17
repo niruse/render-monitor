@@ -24,7 +24,7 @@
     type_private_service: "Private service", type_cron_job: "Cron job",
     per_month: "{price}/month", free: "Free", price_unknown: "Price unknown",
     memory: "Memory", cpu: "CPU", peak: "peak {value}", avg: "average {value}",
-    p95: "p95", slow: "Slow/h", disk: "Disk",
+    p95: "p95", slow: "Slow/h", disk: "Disk", not_in_plan: "Not in plan",
     deploys_today: "Deploys today", restarts_today: "Restarts today", failed_count: "{count} failed",
     last_deploy: "Last deploy", no_deploy: "No deploys yet",
     deploy_live: "live", deploy_failed: "failed", deploy_in_progress: "in progress",
@@ -445,8 +445,10 @@
         const lat = this._state(service, "latency_p95");
         const v = this._value(service, "latency_p95");
         const peak = lat && lat.attributes.peak_ms;
-        stats.push(this._statHtml(service, "latency_p95", this._t("p95"), v === null ? "-" : `${numberText(hass, v)} ms`,
-          peak != null ? this._t("peak", { value: `${numberText(hass, peak)} ms` }) : ""));
+        const noPlan = v === null && lat && lat.attributes.not_in_plan;
+        stats.push(this._statHtml(service, "latency_p95", this._t("p95"),
+          v === null ? (noPlan ? this._t("not_in_plan") : "-") : `${numberText(hass, v)} ms`,
+          noPlan ? String(lat.attributes.not_in_plan) : peak != null ? this._t("peak", { value: `${numberText(hass, peak)} ms` }) : ""));
         statTerms.push("p95");
       }
       if (service.ids.slow_requests) {

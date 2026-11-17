@@ -398,3 +398,19 @@ async def test_concurrent_callers_cannot_overbook_the_budget():
     await asyncio.gather(*(render.list_instances(API_SERVICE) for _ in range(4)))
     assert len(session.calls) == 4
     assert clock.waits and clock.now >= 1060  # the 3rd and 4th went out a minute after the first two
+
+
+async def test_api_error_carries_renders_reason():
+    session = FakeSession(FakeResponse(400, {"id": "bad", "message": "invalid   resource\tlist " + "x" * 300}))
+    with pytest.raises(api.RenderApiError) as err:
+        await client(session).list_logs(OWNER_ID, [API_SERVICE])
+    assert err.value.status == 400
+    assert err.value.message.startswith("invalid resource list x") and len(err.value.message) == 160
+    assert str(err.value).startswith("Render API returned HTTP 400 for /logs: invalid resource list")
+
+
+async def test_api_error_without_a_body_has_no_reason():
+    session = FakeSession(FakeResponse(500, "oops"))
+    with pytest.raises(api.RenderApiError) as err:
+        await client(session).get_metric("cpu", API_SERVICE)
+    assert err.value.message is None and str(err.value) == "Render API returned HTTP 500 for /metrics/cpu"

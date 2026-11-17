@@ -185,6 +185,7 @@
     "peak_ms": null,
     "peak_at": null,
     "median_ms": null,
+    "not_in_plan": null,
     "unit_of_measurement": "ms",
     "device_class": "duration",
     "friendly_name": "demo-api Response time p95"
@@ -898,6 +899,7 @@
     "peak_ms": 2400.0,
     "peak_at": "2026-11-16T03:15:00Z",
     "median_ms": 120.0,
+    "not_in_plan": null,
     "unit_of_measurement": "ms",
     "device_class": "duration",
     "friendly_name": "demo-shop Response time p95"

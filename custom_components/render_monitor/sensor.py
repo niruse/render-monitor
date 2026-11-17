@@ -147,6 +147,8 @@ SENSORS: tuple[RenderSensorDescription, ...] = (
             "peak_ms": _get(s, "latency", "peak_ms"),
             "peak_at": iso(_get(s, "latency", "peak_at")),
             "median_ms": _get(s, "latency", "median_ms"),
+            # Render's reason when the workspace plan has no latency metrics (e.g. Hobby)
+            "not_in_plan": s.get("latency_not_in_plan"),
         },
         applies=_is_http,
     ),

@@ -112,7 +112,7 @@ async def test_entities_from_one_cycle(hass, utc, render, make_entry, frontend_l
     assert device.name == "demo-shop" and device.manufacturer == "Render"
     assert device.configuration_url == f"https://dashboard.render.com/web/{SHOP}"
 
-    # logs: two searches for all web services together, not one per service
+    # logs: two searches for all web services of one region together, not one per service
     assert render.list_logs.await_count == 2
     resources = render.list_logs.await_args_list[0].args[1]
     assert sorted(resources) == [API_SERVICE, SHOP]
@@ -328,4 +328,78 @@ async def test_capped_slow_search_marks_where_counts_are_complete(hass, utc, ren
     oldest = min(row["timestamp"] for row in render.day["logs_slow"]["logs"])
     assert slow["truncated"] is True
     assert slow["complete_from"] == oldest.replace(".000000", "")[:19] + "Z"
+    assert await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_log_searches_are_split_by_region(hass, utc, render, make_entry, frontend_loaded):
+    """Render refuses a log search over resources of different regions (HTTP 400)."""
+    shop = next(s for s in render.services if s["id"] == SHOP)
+    shop["serviceDetails"]["region"] = "virginia"
+    plain = render.list_logs.side_effect
+
+    async def only_the_shop(owner, resources, **kw):  # the day's lines all belong to the shop
+        return await plain(owner, resources, **kw) if SHOP in resources else []
+
+    render.list_logs.side_effect = only_the_shop
+    entry = make_entry()
+    await setup(hass, entry)
+
+    searches = [(c.args[1], c.kwargs["text"]) for c in render.list_logs.await_args_list]
+    assert len(searches) == 4
+    assert sorted(tuple(ids) for ids, _ in searches) == [(API_SERVICE,), (API_SERVICE,), (SHOP,), (SHOP,)]
+    # the shop's lines still count: same totals as with one search
+    assert entity(hass, SHOP, "slow_requests").attributes["total_24h"] == 13
+    assert await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_one_region_failing_keeps_the_last_answer(hass, utc, render, make_entry, frontend_loaded):
+    shop = next(s for s in render.services if s["id"] == SHOP)
+    shop["serviceDetails"]["region"] = "virginia"
+
+    async def logs(owner, resources, *, text=None, **kw):
+        if resources == [API_SERVICE]:
+            raise RenderApiError(400, "/logs", "bad request")
+        return render.day["logs_slow" if text == ["slow:"] else "logs_import"]["logs"]
+
+    render.list_logs.side_effect = logs
+    entry = make_entry()
+    await setup(hass, entry)
+    status = entity(hass, SHOP, "status")
+    assert "slow logs (frankfurt): Render API returned HTTP 400 for /logs: bad request" in str(status.attributes["errors"])
+    assert await hass.config_entries.async_unload(entry.entry_id)
+
+
+async def test_latency_not_in_plan_is_not_an_error(hass, utc, render, make_entry, frontend_loaded):
+    """A Hobby workspace gets a 400 for latency: say so on the sensor, ask again only a day later."""
+    plain = render.get_metric.side_effect
+
+    async def metric(name, sid, **kw):
+        if name == "http-latency":
+            raise RenderApiError(400, "/metrics/http-latency", "query is not allowed for plan: Hobby")
+        return plain(name, sid, **kw)
+
+    render.get_metric.side_effect = metric
+    entry = make_entry()
+    coordinator = await setup(hass, entry)
+    p95 = entity(hass, SHOP, "latency_p95")
+    assert p95.state == "unknown"
+    assert p95.attributes["not_in_plan"] == "query is not allowed for plan: Hobby"
+    assert "errors" not in entity(hass, SHOP, "status").attributes or not entity(hass, SHOP, "status").attributes["errors"]
+    asked = sum(c.args[0] == "http-latency" for c in render.get_metric.await_args_list)
+    assert asked >= 1  # the first refusal stops the other services asking too
+    assert entity(hass, API_SERVICE, "latency_p95").attributes["not_in_plan"]
+
+    utc.tick(timedelta(hours=1))
+    coordinator.metrics_at = None
+    await coordinator.async_refresh()
+    assert sum(c.args[0] == "http-latency" for c in render.get_metric.await_args_list) == asked
+    assert entity(hass, SHOP, "latency_p95").attributes["not_in_plan"]
+
+    utc.tick(timedelta(hours=24))
+    coordinator.metrics_at = None
+    render.get_metric.side_effect = plain  # the plan was upgraded
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+    assert sum(c.args[0] == "http-latency" for c in render.get_metric.await_args_list) > asked
+    assert entity(hass, SHOP, "latency_p95").attributes["not_in_plan"] is None
     assert await hass.config_entries.async_unload(entry.entry_id)

@@ -42,6 +42,8 @@ DEPLOYS_READ = 50  # newest deploys read each cycle (enough for "today" and the 
 EVENTS_READ = 500
 LOG_LINES = 300  # per log search: 3 pages of 100
 RESOLUTION_SECONDS = 300
+PLAN_REFUSAL = "not allowed for plan"  # Render's 400 when the workspace plan has no such metric
+LATENCY_RETRY = timedelta(hours=24)
 _ID = re.compile(r"\b(srv|crn|tea|usr|dep|evt|dsk)-[0-9a-z]+", re.IGNORECASE)
 
 
@@ -76,6 +78,9 @@ class RenderCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.metrics_at: datetime | None = None
         self._metrics: dict[str, dict[str, list[dict[str, Any]]]] = {}
         self._metric_errors: dict[str, str] = {}
+        # Render's reason when the workspace plan has no latency metrics, and until when we don't ask again
+        self.latency_not_in_plan: str | None = None
+        self._latency_retry_at: datetime | None = None
         self._logs: dict[str, Any] = {
             "slow": {}, "import": {}, "slow_truncated": False, "slow_since": None, "error": None,
         }
@@ -149,6 +154,8 @@ class RenderCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 import_times=self._logs["import"].get(sid, []),
                 seen_instance_ids=seen,
             )
+            if snap.get("latency") is None and service.get("type") in HTTP_TYPES:
+                snap["latency_not_in_plan"] = self.latency_not_in_plan
             if sid in self._metric_errors:
                 errors["metrics"] = self._metric_errors[sid]
             if self._logs["error"] and service.get("type") in HTTP_TYPES:
@@ -207,11 +214,23 @@ class RenderCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             found: dict[str, list[dict[str, Any]]] = {}
             failures: dict[str, str] = {}
             for name in names:
+                if name == "http-latency" and self._latency_retry_at and now < self._latency_retry_at:
+                    continue  # not in the workspace's plan: asked again once a day
                 extra = {"quantile": 0.95} if name == "http-latency" else {}
                 rows = await self._try(
                     failures, name, self.client.get_metric, name, sid,
                     start=start, end=now, resolution_seconds=RESOLUTION_SECONDS, **extra,
                 )
+                if name == "http-latency":
+                    reason = failures.get(name, "")
+                    if PLAN_REFUSAL in reason:
+                        # e.g. "query is not allowed for plan: Hobby": a limit of the plan, not a fault
+                        failures.pop(name)
+                        self.latency_not_in_plan = reason.split(": ", 1)[-1] if ": " in reason else reason
+                        self._latency_retry_at = now + LATENCY_RETRY
+                    elif rows is not None:
+                        self.latency_not_in_plan = None
+                        self._latency_retry_at = None
                 if rows is not None:
                     found[name] = rows
                 elif name in (self._metrics.get(sid) or {}):  # keep the cached series
@@ -223,29 +242,55 @@ class RenderCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         await asyncio.gather(*(one(s) for s in watched))
         self._metrics = metrics
         self._metric_errors = errors
-        await self._read_logs([s["id"] for s in services if s.get("type") in HTTP_TYPES], start, now)
+        await self._read_logs([s for s in services if s.get("type") in HTTP_TYPES], start, now)
         self.metrics_at = now
 
-    async def _read_logs(self, ids: list[str], start: datetime, now: datetime) -> None:
-        """Two searches for all web services together: slow-request lines and import lines."""
-        if not ids:
+    async def _read_logs(self, services: list[dict[str, Any]], start: datetime, now: datetime) -> None:
+        """Slow-request and import lines for all web services: one search per region.
+
+        Render's log search only takes resources of one region (a mixed list is a 400), so the
+        services are grouped by region and each group is searched on its own.
+        """
+        if not services:
             self._logs = {"slow": {}, "import": {}, "slow_truncated": False, "slow_since": None, "error": None}
             return
+        groups: dict[str, list[str]] = {}
+        for service in services:
+            region = (service.get("serviceDetails") or {}).get("region") or ""
+            groups.setdefault(region, []).append(service["id"])
         failures: dict[str, str] = {}
-        slow = await self._try(
-            failures, "slow logs", self.client.list_logs, self.owner_id, ids,
-            start=start, end=now, text=[SLOW_LOG_TEXT], max_items=LOG_LINES,
-        )
-        imports = await self._try(
-            failures, "import logs", self.client.list_logs, self.owner_id, ids,
-            start=start, end=now, text=[IMPORT_LOG_TEXT], max_items=LOG_LINES,
-        )
+        slow: list[dict[str, Any]] | None = []
+        imports: list[dict[str, Any]] | None = []
+        truncated, since = False, None
+        for region, ids in sorted(groups.items()):
+            label = f" ({region})" if len(groups) > 1 and region else ""
+            part = await self._try(
+                failures, f"slow logs{label}", self.client.list_logs, self.owner_id, ids,
+                start=start, end=now, text=[SLOW_LOG_TEXT], max_items=LOG_LINES,
+            )
+            if part is None:
+                slow = None
+            elif slow is not None:
+                slow.extend(part)
+                if len(part) >= LOG_LINES:
+                    # hours before this group's oldest line may be missing: complete only from the latest such line
+                    truncated = True
+                    oldest = _oldest(part)
+                    since = oldest if since is None or (oldest and oldest > since) else since
+            part = await self._try(
+                failures, f"import logs{label}", self.client.list_logs, self.owner_id, ids,
+                start=start, end=now, text=[IMPORT_LOG_TEXT], max_items=LOG_LINES,
+            )
+            if part is None:
+                imports = None
+            elif imports is not None:
+                imports.extend(part)
         self._logs = {
             "slow": logs_by_service(slow) if slow is not None else self._logs["slow"],
             "import": logs_by_service(imports) if imports is not None else self._logs["import"],
             # A failed search keeps the last answer, and with it whether that one was cut short.
-            "slow_truncated": len(slow) >= LOG_LINES if slow is not None else self._logs["slow_truncated"],
-            # the oldest line the capped search returned: hours from then on are complete
-            "slow_since": _oldest(slow) if slow is not None else self._logs.get("slow_since"),
+            "slow_truncated": truncated if slow is not None else self._logs["slow_truncated"],
+            # the oldest line a capped search returned: hours from then on are complete
+            "slow_since": (since if truncated else _oldest(slow)) if slow is not None else self._logs.get("slow_since"),
             "error": "; ".join(f"{k}: {v}" for k, v in failures.items()) or None,
         }

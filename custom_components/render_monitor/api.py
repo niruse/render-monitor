@@ -74,10 +74,25 @@ class RenderRateLimited(RenderError):
 class RenderApiError(RenderError):
     """Render answered with an unexpected status or body."""
 
-    def __init__(self, status: int, path: str) -> None:
-        super().__init__(f"Render API returned HTTP {status} for {path}")
+    def __init__(self, status: int, path: str, message: str | None = None) -> None:
+        text = f"Render API returned HTTP {status} for {path}"
+        super().__init__(f"{text}: {message}" if message else text)
         self.status = status
         self.path = path
+        self.message = message
+
+
+async def _error_message(response: Any) -> str | None:
+    """Render's own reason for a 4xx/5xx ({"message": ...}), shortened; None when there is none."""
+    try:
+        body = await response.json(content_type=None)
+    except (ValueError, aiohttp.ClientError):
+        return None
+    message = body.get("message") if isinstance(body, dict) else None
+    if not isinstance(message, str) or not message.strip():
+        return None
+    message = " ".join(message.split())
+    return message if len(message) <= 160 else message[:159] + "…"
 
 
 def iso(moment: datetime) -> str:
@@ -219,7 +234,7 @@ class RenderClient:
                     elif status == 401 or (status == 403 and path in AUTH_PATHS):
                         raise RenderAuthError(f"Render rejected the API key (HTTP {status})")
                     elif status >= 400:
-                        raise RenderApiError(status, path)
+                        raise RenderApiError(status, path, await _error_message(response))
                     else:
                         try:
                             return await response.json(content_type=None)
