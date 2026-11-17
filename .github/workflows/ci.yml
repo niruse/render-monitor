@@ -29,7 +29,7 @@ jobs:
 
   card:
     # the bundled card in Chromium on a fake hass (tests_card/card_hass.json, written by the integration)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Playwright 1.56 has no Chromium for ubuntu 26.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
